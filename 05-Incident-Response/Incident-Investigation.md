@@ -2,56 +2,61 @@
 
 ## Incident Overview
 
-A controlled security test was executed against the Windows 11 endpoint using Atomic Red Team to validate the SOC incident response process.
+A controlled security incident was generated on the Windows 11 endpoint using Atomic Red Team to validate the SOC's incident response capability.
 
 ## Detection
 
-Wazuh detected account discovery activity through Sysmon process creation telemetry.
+Wazuh detected account discovery activity generated through Sysmon process creation telemetry.
 
-* Endpoint: Windows11
-* IP: 192.168.52.141
-* MITRE ATT&CK: T1087 – Account Discovery
-* Wazuh Rules: 92031, 92039
-* Sysmon Event: 1 – Process Creation
+* **Endpoint:** Windows11
+* **IP:** 192.168.52.141
+* **MITRE ATT&CK:** T1087 – Account Discovery
+* **Wazuh Rules:** 92031, 92039
+* **Sysmon Event:** Event ID 1 – Process Creation
+
+The Wazuh rules used during the exercise were existing Wazuh detection rules and were not custom rules created for this project.
 
 ## Investigation
 
-The Wazuh alert showed execution of `net user` and `net accounts` commands.
+The alert showed execution of account discovery commands including `net user` and `net accounts`.
 
-The Sysmon telemetry provided process details including command line, parent process, user context and file hashes.
+Sysmon provided process information including command line, parent process, user context and file hashes.
 
-The activity was traced to the Windows endpoint and confirmed as the expected Atomic Red Team simulation.
+The endpoint's established network connections were also reviewed. The Wazuh agent communication with the manager was identified on TCP port 1514.
+
+Associated processes were reviewed using their process IDs to determine which applications were responsible for the observed network connections.
+
+## Assessment
+
+The activity was confirmed as the expected Atomic Red Team simulation rather than an uncontrolled compromise.
+
+No active `net.exe` process remained after the simulation.
 
 ## Containment
 
-The incident response procedure identified the endpoint for isolation if the activity represented a real compromise.
+For a real incident, the affected endpoint would be isolated from the network while preserving evidence.
 
-Because this was a controlled lab simulation, the endpoint was not actually disconnected from the network.
+Because this was a controlled lab simulation, network isolation was not performed so that SOC monitoring could continue normally.
 
 ## Recovery
 
-The simulated command execution had completed and no `net.exe` process remained active on the endpoint.
+The Wazuh agent service was verified as running after the investigation.
 
-The Wazuh agent remained operational and continued providing endpoint telemetry.
+The endpoint remained under monitoring and no active `net.exe` process was present.
 
-## Incident Closure
+## Closure
 
-The simulated incident was closed after confirming:
+The simulated incident was closed after:
 
-* The detection successfully triggered.
-* The activity was investigated using endpoint telemetry.
-* The simulated process was no longer running.
+* Detection was confirmed.
+* Endpoint activity was investigated.
+* Network connections were reviewed.
+* Associated processes were identified.
+* The simulated activity ended.
 * Wazuh monitoring remained operational.
-
-## Evidence
-
-* Wazuh T1087 detection
-* Sysmon process creation event
-* Windows endpoint identification
-* Wazuh agent health verification
 
 ## Lessons Learned
 
-The exercise demonstrated an end-to-end incident response workflow from detection and investigation through containment decision and recovery verification.
+The exercise demonstrated an end-to-end incident response workflow using real endpoint telemetry.
 
-The lab also confirmed that Sysmon and Wazuh provide sufficient endpoint telemetry for initial incident investigation.
+The investigation showed the value of combining Sysmon process data, Wazuh alerts, endpoint information and network connection analysis when triaging suspicious activity.

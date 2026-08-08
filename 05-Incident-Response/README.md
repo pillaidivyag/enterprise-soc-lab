@@ -2,28 +2,28 @@
 
 ## Overview
 
-Incident response focuses on investigating, containing, and recovering from security incidents detected within the SOC environment.
+This phase demonstrates the investigation and response process for a simulated security incident detected on a Windows endpoint.
+
+## Scenario
+
+Atomic Red Team was used to generate account discovery activity on the Windows 11 endpoint. Sysmon captured the process activity and Wazuh detected the behaviour using its existing detection rules.
 
 ## Objectives
 
-* Investigate security alerts and suspicious activity.
-* Perform initial incident triage.
-* Collect and analyse relevant evidence.
-* Contain and remediate confirmed activity.
-* Document incident response actions and findings.
-* Identify improvements to detection and response processes.
-
-## Incident Scenario
-
-The phase uses a simulated Windows endpoint security incident involving account discovery activity detected through Sysmon and Wazuh.
+* Investigate a security alert.
+* Analyse endpoint and network evidence.
+* Assess the activity and its impact.
+* Define containment actions.
+* Verify endpoint recovery.
+* Document the incident lifecycle.
 
 ## Deliverables
 
 * Incident response playbook
-* Incident investigation report
+* Incident investigation
 * Incident evidence
-* Response and remediation actions
+* Response and recovery validation
 
 ## Outcome
 
-The SOC demonstrates the ability to progress from security alert detection through investigation, containment, remediation, and documented incident closure.
+The SOC demonstrated an end-to-end incident response workflow from detection and investigation through containment decision and recovery verification.
